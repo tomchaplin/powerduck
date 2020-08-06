@@ -5,14 +5,15 @@ RELEASE="https://raw.githubusercontent.com/tomchaplin/powerduck/master/dist/powe
 BIN_DIR="/usr/local/bin"
 
 # Remove old symlinks
-unlink "$BIN_DIR/powerduck"
-unlink "$BIN_DIR/powerduckling"
+sudo unlink "$BIN_DIR/powerduck"
+sudo unlink "$BIN_DIR/powerduckling"
 # Clean install directory
 if [[ -d "$INSTALL_DIR" ]]; then
-	rm -r "$INSTALL_DIR"
+	sudo rm -r "$INSTALL_DIR"
 fi
 # Make install directory
-mkdir "$INSTALL_DIR"
+sudo mkdir "$INSTALL_DIR"
+sudo chown -R tom "$INSTALL_DIR"
 # Get release
 cd "$INSTALL_DIR"
 curl "$RELEASE" --output powerduck.zip
@@ -20,8 +21,10 @@ unzip powerduck.zip
 rm powerduck.zip
 mv powerduck-release/* .
 rm -r powerduck-release
+echo "(cd $INSTALL_DIR && exec $INSTALL_DIR/powerduck-linux)" > "$INSTALL_DIR/powerduck"
+chmod +x "$INSTALL_DIR/powerduck"
 # Initializse config files
 bash "$INSTALL_DIR/init.sh"
 # Install binary symlinks
-ln -s "$INSTALL_DIR/powerduck-linux" "$BIN_DIR/powerduck"
-ln -s "$INSTALL_DIR/powerduckling" "$BIN_DIR/powerduckling"
+sudo ln -s "$INSTALL_DIR/powerduck" "$BIN_DIR/powerduck"
+sudo ln -s "$INSTALL_DIR/powerduckling" "$BIN_DIR/powerduckling"
