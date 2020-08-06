@@ -10,16 +10,14 @@ At the moment, very much hard coded for a single PC.
 
 ## Installation
 
-There are a few tasks that need to be run to install the compiled app:
-
-* Download the zip and extract to the install directory `/opt/powerduck/`
-* Run the init script to ensure config files are stup
-* Install the service file to enable default profiles on startup
-* Install the desktop file
-* Add symlinks for `powerduck` and `powerduckling` binaries
-* Remove the zip
-
-This will be handled by an install script soon
+You just need to download the install script, make it executable and run it
+```
+curl https://raw.githubusercontent.com/tomchaplin/powerduck/master/install.sh --output powerduck-install.sh
+chmod +x powerduck-install.sh
+sudo --preserve-env=HOME ./powerduck-install.sh
+rm powerduck-install.sh
+```
+Note the `--preserve-env` is important so that the config files get initialised in your home directory
 
 ## Building
 
