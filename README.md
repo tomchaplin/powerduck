@@ -10,14 +10,11 @@ At the moment, very much hard coded for a single PC.
 
 ## Installation
 
-You just need to download the install script, make it executable and run it
+The install script `install.sh` will do everything for you, you may wish to inspect it for security reasons.
+To download and install the script just run
 ```
-curl https://raw.githubusercontent.com/tomchaplin/powerduck/master/install.sh --output powerduck-install.sh
-chmod +x powerduck-install.sh
-sudo --preserve-env=HOME ./powerduck-install.sh
-rm powerduck-install.sh
+curl https://raw.githubusercontent.com/tomchaplin/powerduck/master/install.sh | bash
 ```
-Note the `--preserve-env` is important so that the config files get initialised in your home directory
 
 ## Building
 
