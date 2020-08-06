@@ -9,6 +9,9 @@
 # logs
 neutralinojs.log
 
+# Compiled JS
+/app/assets/app.*.js
+
 # Neutralino Binaries
 powerduck-linux
 powerduck-mac
