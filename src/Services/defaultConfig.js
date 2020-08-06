@@ -1,6 +1,9 @@
 export default {
   general: {
-    defaults: {},
+    defaults: {
+      lighting: '',
+      cooling: '',
+    },
   },
   profiles: {
     lighting: [],
