@@ -18,16 +18,16 @@ class TabContent extends Component {
       <Container fluid>
         <div className="pt-3">
           <Tab.Content>
-            <Tab.Pane eventKey="general">
+            <Tab.Pane eventKey="general" unmountOnExit={true}>
               <GeneralView />
             </Tab.Pane>
-            <Tab.Pane eventKey="lighting">
+            <Tab.Pane eventKey="lighting" unmountOnExit={true}>
               <ProfileView type="lighting" />
             </Tab.Pane>
-            <Tab.Pane eventKey="cooling">
+            <Tab.Pane eventKey="cooling" unmountOnExit={true}>
               <ProfileView type="cooling" />
             </Tab.Pane>
-            <Tab.Pane eventKey="triggers">
+            <Tab.Pane eventKey="triggers" unmountOnExit={true}>
               <TriggersView />
             </Tab.Pane>
           </Tab.Content>
