@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Powerduck
+Comment=A GUI front end for liquidctl
+Path=/opt/powerduck
+Exec=powerduck
+Icon=powerduck
+Terminal=false
