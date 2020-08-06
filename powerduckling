@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+import os
+import sys
+import json
+
+def stripHash(code):
+    return code[1:]
+
+def executeLightingProfile(profile):
+    for data in profile['data']:
+        colors = ' '.join(map(stripHash, data['colors']))
+        command = 'liquidctl {snippet} color {mode} {colors}'.format(
+                snippet=data['snippet'], mode=data['mode'], colors=colors)
+        logHandle.write(command + '\n')
+        os.system(command)
+
+
+def executeCoolingProfile(profile):
+    print(profile['name'])
+
+HOME = os.getenv('HOME')
+CONFIG_FOLDER='{HOME}/.config/powerduck'.format(HOME=HOME)
+ACTIVE_PROFILES='{CONFIG_FOLDER}/activeProfiles.json'.format(CONFIG_FOLDER=CONFIG_FOLDER)
+POWERDUCK_CONFIG='{CONFIG_FOLDER}/powerduck.json'.format(CONFIG_FOLDER=CONFIG_FOLDER)
+LOGFILE='{CONFIG_FOLDER}/log'.format(CONFIG_FOLDER=CONFIG_FOLDER)
+logHandle=open(LOGFILE, "a")
+
+lightingID = sys.argv[1]
+coolingID = sys.argv[2]
+
+configF = open(POWERDUCK_CONFIG, "r")
+config = json.loads(configF.read())
+configF.close()
+
+activeF = open(ACTIVE_PROFILES, "r")
+active = json.loads(activeF.read())
+activeF.close
+
+if lightingID != '-':
+    lightingProfile = [x for x in config['profiles']['lighting'] if x['id'] == lightingID][0]
+    executeLightingProfile(lightingProfile)
+    active['lighting'] = lightingID
+
+if coolingID != '-':
+    coolingProfile = [x for x in config['profiles']['cooling'] if x['id'] == coolingID][0]
+    executeCoolingProfile(coolingProfile)
+    active['cooling'] = coolingID
+
+f = open(ACTIVE_PROFILES, "w")
+f.write(json.dumps(active))
+f.close()
+
+logHandle.close()
