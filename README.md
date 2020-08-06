@@ -3,6 +3,11 @@
 A graphical interface on top of `liquidctl` for controlling the lighting and cooling of your PC.
 At the moment, very much hard coded for a single PC.
 
+## Prerequisites
+
+* Python 3
+* `liqudictl`
+
 ## Installation
 
 There are a few tasks that need to be run to install the compiled app:
@@ -18,9 +23,10 @@ This will be handled by an install script soon
 
 ## Building
 
-You will need the `neu-cli` which you can [download here](https://neutralino.js.org/docs/#/tools/cli).
+As well as `npm`, you will need the `neu-cli` which you can [download here](https://neutralino.js.org/docs/#/tools/cli).
 Then simply clone the project and run
 ```
+npm install
 neu update
 neu build
 ./init.sh
