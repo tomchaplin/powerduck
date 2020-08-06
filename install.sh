@@ -3,6 +3,7 @@
 INSTALL_DIR="/opt/powerduck"
 RELEASE="https://raw.githubusercontent.com/tomchaplin/powerduck/master/dist/powerduck.zip"
 BIN_DIR="/usr/local/bin"
+USER="$(whoami)"
 
 # Remove old symlinks
 sudo unlink "$BIN_DIR/powerduck"
@@ -13,7 +14,7 @@ if [[ -d "$INSTALL_DIR" ]]; then
 fi
 # Make install directory
 sudo mkdir "$INSTALL_DIR"
-sudo chown -R tom "$INSTALL_DIR"
+sudo chown -R "$USER" "$INSTALL_DIR"
 # Get release
 cd "$INSTALL_DIR"
 curl "$RELEASE" --output powerduck.zip
