@@ -15,6 +15,7 @@ USER="$(whoami)"
 CONFIG_FOLDER="$HOME/.config/powerduck"
 POWERDUCK_CONFIG="$CONFIG_FOLDER/powerduck.json"
 ACTIVE_PROFILES="$CONFIG_FOLDER/activeProfiles.json"
+USER_SERVICES="/etc/systemd/user"
 
 # Remove old symlinks
 robot_say "Removing old programs"
@@ -61,3 +62,9 @@ if [[ ! -d "$DESKTOP_DIR" ]]; then
 fi
 cp "$INSTALL_DIR/powerduck.desktop" "$DESKTOP_DIR/powerduck.desktop"
 robot_say "All done!"
+# Install service file
+if [[ ! -d "$USER_SERVICES" ]]; then
+	sudo mkdir -p "$USER_SERVICES"
+fi
+sudo cp "$INSTALL_DIR/powerduck.service" "$USER_SERVICES/powerduck.service"
+systemctl --user enable powerduck

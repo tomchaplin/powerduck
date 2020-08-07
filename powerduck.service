@@ -1,0 +1,10 @@
+[Unit]
+Description=Startup default powerduck profiles on boot
+
+[Service]
+Type=oneshot
+ExecStart=/opt/powerduck/powerduckling -d
+RemainAfterExit=true
+
+[Install]
+WantedBy=default.target
