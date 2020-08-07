@@ -58,10 +58,16 @@ def main(argv):
             printHelp()
             sys.exit()
         elif opt in ("-d", "--default"):
-            lightingID = config['general']['defaults']['lighting']
-            coolingID = config['general']['defaults']['cooling']
-            executeLightingProfile(lightingID)
-            executeCoolingProfile(coolingID)
+            try: 
+                lightingID = config['general']['defaults']['lighting']
+                executeLightingProfile(lightingID)
+            except KeyError:
+                print("No default lighting profile")
+            try:
+                coolingID = config['general']['defaults']['cooling']
+                executeCoolingProfile(coolingID)
+            except KeyError:
+                print("No default cooling profile")
         elif opt in ("-l", "--lighting"):
             executeLightingProfile(arg)
         elif opt in ("-c", "--cooling"):
