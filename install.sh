@@ -61,7 +61,6 @@ if [[ ! -d "$DESKTOP_DIR" ]]; then
 	mkdir -p "$DESKTOP_DIR"
 fi
 cp "$INSTALL_DIR/powerduck.desktop" "$DESKTOP_DIR/powerduck.desktop"
-robot_say "All done!"
 # Install service file
 robot_say "Installing startup service file"
 if [[ ! -d "$USER_SERVICES" ]]; then
@@ -69,3 +68,4 @@ if [[ ! -d "$USER_SERVICES" ]]; then
 fi
 sudo cp "$INSTALL_DIR/powerduck.service" "$USER_SERVICES/powerduck.service"
 systemctl --user enable powerduck
+robot_say "All done!"
