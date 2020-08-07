@@ -63,6 +63,7 @@ fi
 cp "$INSTALL_DIR/powerduck.desktop" "$DESKTOP_DIR/powerduck.desktop"
 robot_say "All done!"
 # Install service file
+robot_say "Installing startup service file"
 if [[ ! -d "$USER_SERVICES" ]]; then
 	sudo mkdir -p "$USER_SERVICES"
 fi
