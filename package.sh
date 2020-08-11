@@ -10,7 +10,7 @@ neu build
 # Release the project
 neu release
 # Copy in powerduckling, desktop and service file
-cp powerduckling powerduck.desktop powerduck.service dist/powerduck-release/
+cp powerduckling powerduck.desktop powerduck.service powerduck.png dist/powerduck-release/
 # Move into dist directory
 cd dist
 # Delete the zip

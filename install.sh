@@ -16,6 +16,7 @@ CONFIG_FOLDER="$HOME/.config/powerduck"
 POWERDUCK_CONFIG="$CONFIG_FOLDER/powerduck.json"
 ACTIVE_PROFILES="$CONFIG_FOLDER/activeProfiles.json"
 USER_SERVICES="/etc/systemd/user"
+ICON_DIR="$HOME/.icons"
 
 # Remove old symlinks
 robot_say "Removing old programs"
@@ -68,4 +69,14 @@ if [[ ! -d "$USER_SERVICES" ]]; then
 fi
 sudo cp "$INSTALL_DIR/powerduck.service" "$USER_SERVICES/powerduck.service"
 systemctl --user enable powerduck
+# Install icon
+robot_say "Installing icon file"
+if [[ ! -d "$ICON_DIR" ]]; then
+	mkdir -p "$ICON_DIR"
+fi
+if [[ -f "$ICON_DIR/powerduck.png" ]]; then
+	rm "$ICON_DIR/powerduck.png"
+fi
+cp "$INSTALL_DIR/powerduck.png" "$ICON_DIR/powerduck.png"
+# All done
 robot_say "All done!"
