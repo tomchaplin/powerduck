@@ -1,0 +1,62 @@
+#!/bin/bash
+
+CONFIG_FOLDER="${HOME}/.config/powerduck"
+FAN_CURVE="${CONFIG_FOLDER}/fan_curve"
+MIN_SPEED=20
+MAX_LIQUID_TEMP=55
+INTERVAL=10
+
+read_temp() {
+	SENSORS_CHIP="coretemp-isa-0000"
+	TEMP=$(sensors -u "$SENSORS_CHIP" | grep input | cut -f4 -d" " | sort -nr | head -n1 | xargs printf '%.0f')
+}
+
+check_for_liquid_temp() {
+	LIQUID_TEMP=$(liquidctl --match kraken status | grep Liquid | grep -o [0-9.]* | xargs printf '%.0f')
+	if [[ $LIQUID_TEMP -gt 50 ]]; then
+		TARGET_SPEED=80
+	fi
+	if [[ $LIQUID_TEMP -gt 55 ]]; then
+		TARGET_SPEED=100
+	fi
+}
+
+get_target_speed() {
+	# Initialise at minimum speed
+	SPEED_FIELD=$MIN_SPEED
+	while IFS= read -r line; do
+		TEMP_FIELD=$(echo $line | cut -f1 -d" ")
+		if [[ $TEMP_FIELD -gt $TEMP ]]; then
+			# We have not reached the temperature on this line
+			# So we want the fan speed from the last line
+			# So long as its above minimum
+			if [[ $SPEED_FIELD  -gt $MIN_SPEED ]]; then
+				TARGET_SPEED=$SPEED_FIELD
+			fi
+			break
+		fi
+		SPEED_FIELD=$(echo $line | cut -f2 -d" ")
+	done < "${FAN_CURVE}"
+	check_for_liquid_temp
+}
+
+set_pump_speed() {
+	# Set pump speed
+	echo "Setting pump to $TARGET_SPEED"
+	liquidctl --match kraken set pump speed $TARGET_SPEED
+}
+
+set_fan_speed() {
+	# Set fan speed
+	echo "Setting fans to $TARGET_SPEED"
+	liquidctl --match smart set sync speed $TARGET_SPEED
+}
+
+while :; do
+	read_temp
+	echo "Max CPU temp is $TEMP C"
+	get_target_speed
+	set_pump_speed
+	set_fan_speed
+	sleep 10
+done
