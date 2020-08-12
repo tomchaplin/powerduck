@@ -5,11 +5,13 @@ import json
 import getopt
 
 HOME = os.getenv('HOME')
-CONFIG_FOLDER='{HOME}/.config/powerduck'.format(HOME=HOME)
-ACTIVE_PROFILES='{CONFIG_FOLDER}/activeProfiles.json'.format(CONFIG_FOLDER=CONFIG_FOLDER)
-POWERDUCK_CONFIG='{CONFIG_FOLDER}/powerduck.json'.format(CONFIG_FOLDER=CONFIG_FOLDER)
-LOGFILE='{CONFIG_FOLDER}/log'.format(CONFIG_FOLDER=CONFIG_FOLDER)
-logHandle=open(LOGFILE, "a")
+CONFIG_FOLDER = '{HOME}/.config/powerduck'.format(HOME=HOME)
+ACTIVE_PROFILES = '{CONFIG_FOLDER}/activeProfiles.json'.format(
+    CONFIG_FOLDER=CONFIG_FOLDER)
+POWERDUCK_CONFIG = '{CONFIG_FOLDER}/powerduck.json'.format(
+    CONFIG_FOLDER=CONFIG_FOLDER)
+LOGFILE = '{CONFIG_FOLDER}/log'.format(CONFIG_FOLDER=CONFIG_FOLDER)
+logHandle = open(LOGFILE, "a")
 
 configF = open(POWERDUCK_CONFIG, "r")
 config = json.loads(configF.read())
@@ -19,37 +21,44 @@ activeF = open(ACTIVE_PROFILES, "r")
 active = json.loads(activeF.read())
 activeF.close()
 
+
 def stripHash(code):
     return code[1:]
 
+
 def executeLightingProfile(ID):
     try:
-        profile = [x for x in config['profiles']['lighting'] if x['id'] == ID][0]
+        profile = [x for x in config['profiles']['lighting']
+                   if x['id'] == ID][0]
         for data in profile['data']:
             colors = ' '.join(map(stripHash, data['colors']))
             command = 'liquidctl {snippet} color {mode} {colors}'.format(
-                    snippet=data['snippet'], mode=data['mode'], colors=colors)
+                snippet=data['snippet'], mode=data['mode'], colors=colors)
             logHandle.write(command + '\n')
             os.system(command)
-        active['lighting']=ID
+        active['lighting'] = ID
     except IndexError:
         print("Could not find lighting profile with ID {ID}".format(ID=ID))
 
 
 def executeCoolingProfile(ID):
     try:
-        profile = [x for x in config['profiles']['cooling'] if x['id'] == ID][0]
+        profile = [x for x in config['profiles']['cooling']
+                   if x['id'] == ID][0]
         print(profile['name'])
-        active['cooling']=ID
+        active['cooling'] = ID
     except IndexError:
         print("Could not find cooling profile with ID {ID}".format(ID=ID))
+
 
 def printHelp():
     print("powerduckling [-h] [-d] [-l <id>] [-c <id>]")
 
+
 def main(argv):
     try:
-        opts, args = getopt.getopt(argv, "hdc:l:", ["help", "default", "cooling=", "lighting="])
+        opts, args = getopt.getopt(
+            argv, "hdc:l:", ["help", "default", "cooling=", "lighting="])
     except getopt.GetoptError:
         printHelp()
         sys.exit(2)
@@ -58,7 +67,7 @@ def main(argv):
             printHelp()
             sys.exit()
         elif opt in ("-d", "--default"):
-            try: 
+            try:
                 lightingID = config['general']['defaults']['lighting']
                 executeLightingProfile(lightingID)
             except KeyError:
