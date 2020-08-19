@@ -59,7 +59,7 @@ class ProfileView extends Component {
   newProfile = () => {
     getDb.then((db) => {
       db.get(`profiles.${this.props.type}`)
-        .push({ id: nanoid(), name: 'New Profile', data: [] })
+        .push({ id: nanoid(), name: 'New Profile' })
         .write()
         .then(this.refresh);
     });
@@ -126,6 +126,7 @@ class ProfileView extends Component {
             }}
             profileId={viewing.id}
             refresh={this.refresh}
+            type={this.props.type}
           />
         );
       } else if (this.props.type === 'cooling') {
@@ -135,6 +136,7 @@ class ProfileView extends Component {
               this.switchView({ mode: 'table' });
             }}
             profileId={viewing.id}
+            refresh={this.refresh}
           />
         );
       }
