@@ -1,0 +1,11 @@
+[Unit]
+Description=Change fan speeds on response to temp changes
+After=powerduck.service
+
+[Service]
+Type=simple
+ExecStart=/opt/powerduck/idleduck
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

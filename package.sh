@@ -9,8 +9,8 @@ neu update
 neu build
 # Release the project
 neu release
-# Copy in idleduck, powerduckling, desktop and service file
-cp idleduck powerduckling powerduck.desktop powerduck.service powerduck.png dist/powerduck-release/
+# Copy in idleduck, powerduckling, desktop and service files
+cp idleduck powerduckling powerduck.desktop idleduck.service powerduck.service powerduck.png dist/powerduck-release/
 # Move into dist directory
 cd dist
 # Delete the zip

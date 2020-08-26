@@ -70,7 +70,9 @@ if [[ ! -d "$USER_SERVICES" ]]; then
 	sudo mkdir -p "$USER_SERVICES"
 fi
 sudo cp "$INSTALL_DIR/powerduck.service" "$USER_SERVICES/powerduck.service"
+sudo cp "$INSTALL_DIR/idleduck.service" "$USER_SERVICES/idleduck.service"
 systemctl --user enable powerduck
+systemctl --user enable idleduck
 # Install icon
 robot_say "Installing icon file"
 if [[ ! -d "$ICON_DIR" ]]; then

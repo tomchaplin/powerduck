@@ -3,9 +3,8 @@ Description=Startup default powerduck profiles on boot
 
 [Service]
 Type=oneshot
-ExecStart=/opt/powerduck/powerduckling -d; /opt/powerduck/idleduck
+ExecStart=/opt/powerduck/powerduckling -d
 RemainAfterExit=true
-Restart=on-failure
 
 [Install]
 WantedBy=default.target
