@@ -1,7 +1,7 @@
 {
   "appname": "powerduck",
   "appport": "0",
-  "mode": "browser",
+  "mode": "window",
   "window": {
     "title": "Powerduck",
     "width": "1000",

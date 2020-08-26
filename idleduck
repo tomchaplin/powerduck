@@ -3,11 +3,12 @@
 CONFIG_FOLDER="${HOME}/.config/powerduck"
 FAN_CURVE="${CONFIG_FOLDER}/fan_curve"
 MIN_SPEED=20
+PREV_SPEED=20
 MAX_LIQUID_TEMP=55
 INTERVAL=10
 
 read_temp() {
-	SENSORS_CHIP="coretemp-isa-0000"
+	SENSORS_CHIP="k10temp-pci-00c3"
 	TEMP=$(sensors -u "$SENSORS_CHIP" | grep input | cut -f4 -d" " | sort -nr | head -n1 | xargs printf '%.0f')
 }
 
@@ -56,7 +57,10 @@ while :; do
 	read_temp
 	echo "Max CPU temp is $TEMP C"
 	get_target_speed
-	set_pump_speed
-	set_fan_speed
+	if [[ $PREV_SPEED -ne $TARGET_SPEED ]]; then
+		set_pump_speed
+		set_fan_speed
+		PREV_SPEED=$TARGET_SPEED
+	fi
 	sleep 10
 done

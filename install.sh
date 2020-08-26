@@ -22,6 +22,7 @@ ICON_DIR="$HOME/.icons"
 robot_say "Removing old programs"
 sudo unlink "$BIN_DIR/powerduck"
 sudo unlink "$BIN_DIR/powerduckling"
+sudo unlink "$BIN_DIR/idleduck"
 # Clean install directory
 if [[ -d "$INSTALL_DIR" ]]; then
 	robot_say "Cleaning old install directory"
@@ -56,6 +57,7 @@ fi
 robot_say "Installing new programs"
 sudo ln -s "$INSTALL_DIR/powerduck" "$BIN_DIR/powerduck"
 sudo ln -s "$INSTALL_DIR/powerduckling" "$BIN_DIR/powerduckling"
+sudo ln -s "$INSTALL_DIR/idleduck" "$BIN_DIR/idleduck"
 # Install desktop entry
 robot_say "Setting up desktop entry"
 if [[ ! -d "$DESKTOP_DIR" ]]; then
